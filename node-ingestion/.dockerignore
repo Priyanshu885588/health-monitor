@@ -1,0 +1,29 @@
+# Dependencies (installed in container)
+node_modules/
+
+# Version control
+.git/
+.github/
+.gitignore
+
+# Build outputs
+dist/
+build/
+*.lock-wscript # node-waf configuration
+
+# Environment files
+.env
+.env.*
+
+# Development/Testing files and logs
+.vscode/
+*.log
+npm-debug.log*
+coverage/
+*.test.js
+*.spec.js
+.eslintcache
+
+# OS-specific files
+.DS_Store
+Thumbs.db

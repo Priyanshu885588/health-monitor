@@ -1,0 +1,24 @@
+services:
+  redis:
+    image: redis:alpine
+    container_name: health-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - health-network
+
+  ingestion-service:
+    build: ./node-ingestion
+    container_name: node-ingestion
+    ports:
+      - "3000:3000"
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+    networks:
+      - health-network
+
+networks:
+  health-network:
+    driver: bridge
