@@ -7,13 +7,22 @@ services:
     networks:
       - health-network
 
-  ingestion-service:
+  node-ingestion:
     build: ./node-ingestion
-    container_name: node-ingestion
-    ports:
-      - "3000:3000"
     environment:
       - REDIS_HOST=redis
+    depends_on:
+      - redis
+    ports:
+      - "3000:3000"
+    networks:
+      - health-network
+
+  python-analytics:
+    build: ./python-analytics
+    environment:
+      - REDIS_HOST=redis
+      - JAVA_SERVICE_URL=http://java-core:8080/alerts
     depends_on:
       - redis
     networks:
