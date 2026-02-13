@@ -1,33 +1,53 @@
 services:
   redis:
     image: redis:alpine
-    container_name: health-redis
-    ports:
-      - "6379:6379"
-    networks:
-      - health-network
+    ports: ["6379:6379"]
+    networks: ["health-net"]
+
+  postgres:
+    image: postgres:15
+    container_name: health-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: healthdb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d healthdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks: ["health-net"]
+
+  java-core:
+    build: ./java-core
+    container_name: java-core
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://health-db:5432/healthdb
+    depends_on:
+      postgres:
+        condition: service_healthy # This waits for the healthcheck above
+    ports: ["8080:8080"]
+    networks: ["health-net"]
 
   node-ingestion:
     build: ./node-ingestion
     environment:
       - REDIS_HOST=redis
-    depends_on:
-      - redis
-    ports:
-      - "3000:3000"
-    networks:
-      - health-network
+    depends_on: [redis]
+    ports: ["3000:3000"]
+    networks: ["health-net"]
 
   python-analytics:
     build: ./python-analytics
     environment:
       - REDIS_HOST=redis
       - JAVA_SERVICE_URL=http://java-core:8080/alerts
-    depends_on:
-      - redis
-    networks:
-      - health-network
+    depends_on: [redis, java-core]
+    networks: ["health-net"]
 
 networks:
-  health-network:
+  health-net:
     driver: bridge
+
+volumes:
+  postgres_data:
