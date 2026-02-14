@@ -2,7 +2,7 @@ name: Node.js Ingestion CI
 
 on:
   push:
-    branches: [ci-cd, main]
+    branches: [ci-cd, main, "feature/node*"]
     paths:
       - "node-ingestion/**"
   pull_request:

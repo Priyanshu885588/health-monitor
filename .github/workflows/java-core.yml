@@ -1,0 +1,11 @@
+name: Java core CI
+
+on:
+  push:
+    branches: [ci-cd, main, "feature/java*"]
+    paths:
+      - "java-core/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "java-core/**"
