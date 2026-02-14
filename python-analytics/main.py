@@ -49,7 +49,7 @@ def trigger_alert(user_id, hr):
         requests.post(JAVA_SERVICE_URL, json=payload)
         print(f"Sent critical alert to Java Service for User {user_id}")
     except Exception as e:
-        print(f"Failed to reach Java service: {e}")
+        print(f"Failed to reach Java service oops: {e}")
 
 if __name__ == "__main__":
     process_metrics()

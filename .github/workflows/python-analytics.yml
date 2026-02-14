@@ -1,0 +1,11 @@
+name: Python analytics CI
+
+on:
+  push:
+    branches: [ci-cd, main, "feature/python*"]
+    paths:
+      - "python-analytics/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "python-analytics/**"
