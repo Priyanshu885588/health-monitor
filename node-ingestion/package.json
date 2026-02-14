@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "test": "jest",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -17,5 +18,10 @@
     "fastify": "^5.7.4",
     "ioredis": "^5.9.3",
     "nodemon": "^3.1.11"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.0",
+    "jest": "^30.2.0"
   }
 }
