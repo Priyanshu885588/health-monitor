@@ -6,7 +6,7 @@ const redis = new Redis({
   host: process.env.REDIS_HOST || "localhost",
   port: 6379,
 });
-
+//fastify is faster then express
 // Endpoint to receive heart rate data
 fastify.post("/ingest", async (request, reply) => {
   const { device_id, user_id, heart_rate } = request.body;
