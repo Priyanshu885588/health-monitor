@@ -43,10 +43,20 @@ def process_metrics():
 
 def trigger_alert(user_id, hr):
     try:
-        # In the next step, this will hit the Java Spring Boot service
-        payload = {"userId": user_id, "heartRate": hr, "message": "Emergency: Critical HR detected"}
-        requests.post(JAVA_SERVICE_URL, json=payload)
+        payload = {
+            "userId": user_id,
+            "heartRate": hr,
+            "message": "Emergency: Critical HR detected"
+        }
+
+        requests.post(
+            JAVA_SERVICE_URL,
+            json=payload,
+            timeout=(3, 5)
+        )
+
         print(f"Sent alert to Java Service for User {user_id}")
+
     except Exception as e:
         print(f"Failed to reach Java service: {e}")
 
