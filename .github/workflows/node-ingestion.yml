@@ -23,6 +23,13 @@ jobs:
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
 
+      - name: Run Semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: >-
+            p/nodejs
+            p/security-audit
+
   build-and-test:
     needs: security-scan
     runs-on: ubuntu-latest
