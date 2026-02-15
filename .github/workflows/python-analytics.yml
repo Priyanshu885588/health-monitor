@@ -6,6 +6,7 @@ on:
     branches: [ci-cd]
     paths:
       - "python-analytics/**"
+      - ".github/workflows/python-analytics.yml"
   pull_request:
     branches: [ci-cd]
     paths:
