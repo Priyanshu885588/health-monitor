@@ -29,6 +29,7 @@ jobs:
           config: >-
             p/nodejs
             p/security-audit
+          target: node-ingestion
 
   build-and-test:
     needs: security-scan
