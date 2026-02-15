@@ -31,6 +31,38 @@ jobs:
             p/security-audit
           target: node-ingestion
 
+  dependency-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: "./node-ingestion/package-lock.json"
+
+      - name: Install deps (no scripts)
+        run: |
+          cd node-ingestion
+          npm ci --ignore-scripts
+
+      # 🔎 npm audit
+      - name: NPM Audit
+        run: |
+          cd node-ingestion
+          npm audit --audit-level=high
+
+      # 🛡️ OWASP Dependency Check scan
+      - name: OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: "node-ingestion"
+          path: "./node-ingestion"
+          format: "HTML"
+
   build-and-test:
     needs: security-scan
     runs-on: ubuntu-latest
@@ -67,11 +99,6 @@ jobs:
           cd node-ingestion
           # Fails if code style doesn't match rules
           npm run lint
-
-      - name: Security Audit
-        run: |
-          cd node-ingestion
-          npm audit --audit-level=high
 
       - name: Run Tests
         env:
