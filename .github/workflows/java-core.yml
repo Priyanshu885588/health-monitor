@@ -49,7 +49,7 @@ jobs:
         uses: dependency-check/Dependency-Check_Action@main
         with:
           project: "spring-boot-app"
-          path: "."
+          path: "./java-core"
           format: "HTML"
 
   # 🧪 3️⃣ Build & Test
@@ -71,7 +71,7 @@ jobs:
         run: mvn clean install --no-transfer-progress -f java-core/pom.xml
 
       - name: Run Tests
-        run: mvn test --no-transfer-progress
+        run: mvn test --no-transfer-progress -f java-core/pom.xml
 
   # 🐳 4️⃣ Docker Build & Push
   docker-push:
