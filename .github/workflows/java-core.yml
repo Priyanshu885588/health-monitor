@@ -2,7 +2,7 @@ name: Java Spring Boot CI
 
 on:
   push:
-    branches: [main, ci-cd, "feature/*"]
+    branches: [main, ci-cd, "feature/java*"]
     path:
       - "java-core/**"
       - ".github/workflows/java-core.yml"
