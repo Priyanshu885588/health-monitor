@@ -51,7 +51,7 @@ app.get("/health", async (req, res) => {
   const status = isRedisConnected ? 200 : 503;
 
   res.status(status).json({
-    status: isRedisConnected ? "UP" : "DOWN",
+    status: isRedisConnected ? "UP and more to go" : "DOWN",
     uptime: process.uptime(),
     timestamp: new Date().toISOString(),
     checks: {
@@ -84,7 +84,7 @@ app.post("/ingest", limiter, async (req, res) => {
       "user_id",
       user_id,
       "heart_rate",
-      heart_rate.toString(),
+      heart_rate.toString()
     );
 
     res.status(202).json({
